@@ -17,15 +17,14 @@ public class SnakeGameTester {
         {false, true, false, false},
         {false, false, false, false}};
 
-    int[] expectedArray = {3, 1, 3};
+    int[] expectedArray = {4, 2, 5};
 
     SnakeGame testOne = new SnakeGame(inputArray, 1, 1);
 
-//    for (int i = 0; i < expectedArray.length; i++) {
-//      System.out.print(testOne.findTailExhaustive()[i] + " ");
-//    }
-//    System.out.println();
-//    System.out.print(testOne.getExhaustiveChecks() + " ");
+    for (int i = 0; i < expectedArray.length; i++) {
+      System.out.print(testOne.findTailExhaustive()[i] + " ");
+    }
+    System.out.println();
 
     for (int i = 0; i < testOne.findTailExhaustive().length; i++) {
       assertEquals(expectedArray[i], testOne.findTailExhaustive()[i]);
@@ -62,10 +61,10 @@ public class SnakeGameTester {
         {true, false, false, false},
         {true, false, false, false},
         {true, false, false, false},
-        {false, false, false, false},
+        {true, false, false, false},
         {false, false, false, false}};
 
-    int[] expectedArray = {2, 0, 6};
+    int[] expectedArray = {2, 0, 3};
     int[] a = {0, 0};
 
     SnakeGame testOne = new SnakeGame(inputArray, 0, 0);
