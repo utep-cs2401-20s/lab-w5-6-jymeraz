@@ -3,6 +3,7 @@ public class SnakeGame {
   private int[] headPosition;
   private static int exhaustiveChecks;
   private static int recursiveChecks;
+  // Initialize tail position here in order to be able to edit it in the recursive method.
   private int[] tailPosition;
 
   public SnakeGame(){
