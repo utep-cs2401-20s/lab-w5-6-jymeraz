@@ -59,9 +59,9 @@ public class SnakeGameTester {
   public void testFindTailRecursive1() {
     boolean[][] inputArray = {
         {true, false, false, false},
-        {true, false, false, false},
-        {true, false, false, false},
-        {true, false, false, false},
+        {false, false, false, false},
+        {false, false, false, false},
+        {false, false, false, false},
         {false, false, false, false}};
 
     int[] expectedArray = {2, 0, 3};

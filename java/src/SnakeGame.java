@@ -125,6 +125,7 @@ public class SnakeGame {
       previousPosition[i] = headPosition[i];
     }
 
+    tailPosition[2]++;
     for(int i = 0; i < tailPosition2.length; i++){
       tailPosition2[i] = findTailRecursive(currentPosition, previousPosition)[i];
     }
@@ -146,9 +147,10 @@ public class SnakeGame {
 
   // Where do i put the recursive checks?
   private int[] findTailRecursive(int[] currentPosition, int[] previousPosition){
+    //FIXME length is always 2 units larger than the actual length
+    System.out.println("length: " + tailPosition[2]);
     //int[] tailPosition = new int[3];
-    recursiveChecks ++;
-    tailPosition[2]++;
+    recursiveChecks++;
     //int[] tailPosition = new int[3];
     int rowCurrent = currentPosition[0];
     int colCurrent = currentPosition[1];
@@ -158,7 +160,6 @@ public class SnakeGame {
 
     // BASE CASE.
     // IF THERE ARE NO OTHER ONES AROUND IT, then return it.
-
     if (rowCurrent != headPosition[0] || colCurrent != headPosition[1]) {
       if (rowCurrent == 0 && colCurrent == 0) {
         // If the one on the right is not equal to the previous and it's empty AND if the one on the
@@ -354,6 +355,7 @@ public class SnakeGame {
         previousPosition[0] = currentPosition[0];
         previousPosition[1] = currentPosition[1];
         currentPosition[0] = rowCurrent + 1;
+        System.out.println("IN recur length: " + tailPosition[2]);
         return findTailRecursive(currentPosition, previousPosition);
       }
 
