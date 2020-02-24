@@ -27,82 +27,110 @@ public class SnakeGame {
     tailPosition = new int[3];
   }
 
-  public int[] findTailExhaustive(){
+  public int[] findTailExhaustive() {
     resetCounters();
     int length = 0;
-    int[] tailPosition = new int[3];
+    //int[] tailPosition = new int[3];
+    tailPosition[0] = -1;
+    tailPosition[1] = -1;
+    boolean foundTail = false;
+
+    // For when the tail is the head.
+    if(game.length == 1 && game[0].length == 1){
+      exhaustiveChecks++;
+      tailPosition[0] = 0;
+      tailPosition[1] = 0;
+      tailPosition[2] = 1;
+      foundTail = true;
+      return tailPosition;
+    }
 
     for(int i = 0; i < game.length; i++){
       for (int j = 0; j < game[i].length; j++) {
-        exhaustiveChecks++;
-        if(game[i][j]){
+        if(!foundTail){
+          exhaustiveChecks++;
+        }
+        if (game[i][j]) {
           length++;
-          // Check the (top, bottom, left, right) neighbors around to make sure that they are not true.
-          // Only one neighbor can be true.
-          // Check that the coordinates are not the head.
-          if(i == 0 && j == 0){
-            if ((!game[i][j + 1] || !game[i + 1][j])
-                && (i != headPosition[0] || j != headPosition[1])) {
-              tailPosition[0] = i;
-              tailPosition[1] = j;
-            }
-          } else if (i == 0 && j == game[i].length - 1){
-            if((!game[i][j - 1] || !game[i + 1][j]) && (i != headPosition[0] || j != headPosition[1])){
-              tailPosition[0] = i;
-              tailPosition[1] = j;
-            }
-          } else if (i == 0){
-            if (((game[i][j - 1] && !game[i + 1][j] && !game[i][j + 1])
-                    || (!game[i][j - 1] && game[i + 1][j] && !game[i][j + 1])
-                    || (!game[i][j - 1] && !game[i + 1][j] && game[i][j + 1]))
-                && (i != headPosition[0] || j != headPosition[1])) {
-              tailPosition[0] = i;
-              tailPosition[1] = j;
-            }
-          } else if (i == game.length - 1 && j == 0){
-            if ((!game[i + 1][j] || !game[i][j + 1])
-                && (i != headPosition[0] || j != headPosition[1])) {
-              tailPosition[0] = i;
-              tailPosition[1] = j;
-            }
-          } else if (j == 0) {
-            if (((game[i - 1][j] && !game[i][j + 1] && !game[i + 1][j])
-                    || (!game[i - 1][j] && game[i][j + 1] && !game[i + 1][j])
-                    || (!game[i - 1][j] && !game[i][j + 1] && game[i + 1][j]))
-                && (i != headPosition[0] || j != headPosition[1])) {
-              tailPosition[0] = i;
-              tailPosition[1] = j;
-            }
-          } else if (i == game.length - 1 && j == game[i].length - 1){
-            if ((!game[i - 1][j] || !game[i][j - 1])
-                && (i != headPosition[0] || j != headPosition[1])) {
-              tailPosition[0] = i;
-              tailPosition[1] = j;
-            }
-          } else if (j == game[i].length - 1){
-            if (((game[i - 1][j] && !game[i][j - 1] && !game[i + 1][j])
-                    || (!game[i - 1][j] && game[i][j - 1] && !game[i + 1][j])
-                    || (!game[i - 1][j] && !game[i][j - 1] && game[i + 1][j]))
-                && (i != headPosition[0] || j != headPosition[1])) {
-              tailPosition[0] = i;
-              tailPosition[1] = j;
-            }
-          } else if (i == game.length - 1){
-            if (((game[i][j - 1] && !game[i - 1][j] && !game[i][j + 1])
-                    || (!game[i][j - 1] && game[i - 1][j] && !game[i][j + 1])
-                    || (!game[i][j - 1] && !game[i - 1][j] && game[i][j + 1]))
-                && (i != headPosition[0] || j != headPosition[1])) {
-              tailPosition[0] = i;
-              tailPosition[1] = j;
-            }
-          } else {
-            if(((game[i][j - 1] && !game[i - 1][j] && !game[i][j + 1] && !game[i + 1][j])
-                    || (!game[i][j - 1] && game[i - 1][j] && !game[i][j + 1] && !game[i + 1][j])
-                    || (!game[i][j - 1] && !game[i - 1][j] && game[i][j + 1] && !game[i + 1][j])
-                    || (!game[i][j - 1] && !game[i - 1][j] && !game[i][j + 1] && game[i + 1][j]))
-                && (i != headPosition[0] || j != headPosition[1])){
-              tailPosition[0] = i;
-              tailPosition[1] = j;
+          if (!foundTail) {
+            // Check the (top, bottom, left, right) neighbors around to make sure that they are not
+            // true.
+            // Only one neighbor can be true.
+            // Check that the coordinates are not the head.
+            if (i == 0 && j == 0) {
+              if ((!game[i][j + 1] || !game[i + 1][j])
+                  && (i != headPosition[0] || j != headPosition[1])) {
+                tailPosition[0] = i;
+                tailPosition[1] = j;
+                foundTail = true;
+              }
+            } else if (i == 0 && j == game[i].length - 1) {
+              if ((!game[i][j - 1] || !game[i + 1][j])
+                  && (i != headPosition[0] || j != headPosition[1])) {
+                tailPosition[0] = i;
+                tailPosition[1] = j;
+                foundTail = true;
+              }
+            } else if (i == 0) {
+              if (((game[i][j - 1] && !game[i + 1][j] && !game[i][j + 1])
+                      || (!game[i][j - 1] && game[i + 1][j] && !game[i][j + 1])
+                      || (!game[i][j - 1] && !game[i + 1][j] && game[i][j + 1]))
+                  && (i != headPosition[0] || j != headPosition[1])) {
+                tailPosition[0] = i;
+                tailPosition[1] = j;
+                foundTail = true;
+              }
+            } else if (i == game.length - 1 && j == 0) {
+              if ((!game[i + 1][j] || !game[i][j + 1])
+                  && (i != headPosition[0] || j != headPosition[1])) {
+                tailPosition[0] = i;
+                tailPosition[1] = j;
+                foundTail = true;
+              }
+            } else if (j == 0) {
+              if (((game[i - 1][j] && !game[i][j + 1] && !game[i + 1][j])
+                      || (!game[i - 1][j] && game[i][j + 1] && !game[i + 1][j])
+                      || (!game[i - 1][j] && !game[i][j + 1] && game[i + 1][j]))
+                  && (i != headPosition[0] || j != headPosition[1])) {
+                tailPosition[0] = i;
+                tailPosition[1] = j;
+                foundTail = true;
+              }
+            } else if (i == game.length - 1 && j == game[i].length - 1) {
+              if ((!game[i - 1][j] || !game[i][j - 1])
+                  && (i != headPosition[0] || j != headPosition[1])) {
+                tailPosition[0] = i;
+                tailPosition[1] = j;
+                foundTail = true;
+              }
+            } else if (j == game[i].length - 1) {
+              if (((game[i - 1][j] && !game[i][j - 1] && !game[i + 1][j])
+                      || (!game[i - 1][j] && game[i][j - 1] && !game[i + 1][j])
+                      || (!game[i - 1][j] && !game[i][j - 1] && game[i + 1][j]))
+                  && (i != headPosition[0] || j != headPosition[1])) {
+                tailPosition[0] = i;
+                tailPosition[1] = j;
+                foundTail = true;
+              }
+            } else if (i == game.length - 1) {
+              if (((game[i][j - 1] && !game[i - 1][j] && !game[i][j + 1])
+                  || (!game[i][j - 1] && game[i - 1][j] && !game[i][j + 1])
+                  || (!game[i][j - 1] && !game[i - 1][j] && game[i][j + 1]))
+                  && (i != headPosition[0] || j != headPosition[1])) {
+                tailPosition[0] = i;
+                tailPosition[1] = j;
+                foundTail = true;
+              }
+            } else {
+              if (((game[i][j - 1] && !game[i - 1][j] && !game[i][j + 1] && !game[i + 1][j])
+                      || (!game[i][j - 1] && game[i - 1][j] && !game[i][j + 1] && !game[i + 1][j])
+                      || (!game[i][j - 1] && !game[i - 1][j] && game[i][j + 1] && !game[i + 1][j])
+                      || (!game[i][j - 1] && !game[i - 1][j] && !game[i][j + 1] && game[i + 1][j]))
+                  && (i != headPosition[0] || j != headPosition[1])) {
+                tailPosition[0] = i;
+                tailPosition[1] = j;
+                foundTail = true;
+              }
             }
           }
         }
@@ -115,7 +143,7 @@ public class SnakeGame {
   public int[] findTailRecursive(){
     tailPosition[2] = 0;
     resetCounters();
-    int[] tailPosition2 = new int[3];
+    //int[] tailPosition2 = new int[3];
     int[] currentPosition = new int[2];
     int[] previousPosition = new int[2];
 
@@ -126,16 +154,16 @@ public class SnakeGame {
       previousPosition[i] = headPosition[i];
     }
 
-    tailPosition[2]++;
-    for(int i = 0; i < tailPosition2.length; i++){
-      tailPosition2[i] = findTailRecursive(currentPosition, previousPosition)[i];
+    //tailPosition[2]++;
+    for(int i = 0; i < tailPosition.length; i++){
+      tailPosition[i] = findTailRecursive(currentPosition, previousPosition)[i];
     }
 
     //tailPosition2 = findTailRecursive(headPosition, headPosition);
     //recursiveChecks++;
     //System.out.println("recursive checks: " + recursiveChecks);
     //tailPosition2[2] = recursiveChecks;
-    return tailPosition2;
+    return tailPosition;
   }
 
 //  private int[] findTailRecursive(int[] currentPosition, int[] previousPosition)
@@ -149,8 +177,9 @@ public class SnakeGame {
   // Where do i put the recursive checks?
   private int[] findTailRecursive(int[] currentPosition, int[] previousPosition){
     //FIXME length is always 2 units larger than the actual length
-    System.out.println("length: " + tailPosition[2]);
+    //System.out.println("length: " + tailPosition[2]);
     //int[] tailPosition = new int[3];
+    tailPosition[2]++;
     recursiveChecks++;
     //int[] tailPosition = new int[3];
     int rowCurrent = currentPosition[0];
@@ -356,7 +385,7 @@ public class SnakeGame {
         previousPosition[0] = currentPosition[0];
         previousPosition[1] = currentPosition[1];
         currentPosition[0] = rowCurrent + 1;
-        System.out.println("IN recur length: " + tailPosition[2]);
+        //System.out.println("IN recur length: " + tailPosition[2]);
         return findTailRecursive(currentPosition, previousPosition);
       }
 
@@ -513,6 +542,13 @@ public class SnakeGame {
     return recursiveChecks;
   }
   private static int getExhaustiveChecks(){
+    return exhaustiveChecks;
+  }
+
+  public static int getRecursiveChecksPublic(){
+    return recursiveChecks;
+  }
+  public static int getExhaustiveChecksPublic(){
     return exhaustiveChecks;
   }
 
