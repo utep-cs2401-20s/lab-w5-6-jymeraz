@@ -6,22 +6,28 @@ public class SnakeGame {
   // Initialize tail position here in order to be able to edit it in the recursive method.
   private int[] tailPosition;
 
+  // Default constructor.
   public SnakeGame(){
     game = new boolean[1][1];
   }
 
+  // Constructor that takes a 2-dimensional boolean array and the x and y position of the head.
   public SnakeGame(boolean[][] inputArray, int row, int col){
     game = new boolean[inputArray.length][inputArray[0].length];
 
+    // Copy input array to the game array.
     for (int i = 0; i < inputArray.length; i++){
       for (int j = 0; j < inputArray[i].length; j++){
         game[i][j] = inputArray[i][j];
       }
     }
 
+    // Initialize and set the head position to the given x and y values.
     headPosition = new int[2];
     headPosition[0] = row;
     headPosition[1] = col;
+
+    // Initialize the tail position array.
     tailPosition = new int[3];
   }
 
@@ -29,8 +35,12 @@ public class SnakeGame {
     // Reset the counter to equal to zero before checking through the array.
     resetCounters();
     int length = 0;
+
+    // The tail position will be -1 if it was never found.
     tailPosition[0] = -1;
     tailPosition[1] = -1;
+
+    // Declare a boolean value that shows whether the tail was found or not.
     boolean foundTail = false;
 
     // Check if the tail and the head are the same value.
@@ -146,7 +156,7 @@ public class SnakeGame {
     resetCounters();
     tailPosition[2] = 0;
 
-    // Initialize two arrays with the same contents as headPosition to avoid overwriting to the headPosition array.
+    // Initialize two arrays with the same contents as headPosition to avoid overwriting the headPosition array.
     int[] currentPosition = new int[2];
     int[] previousPosition = new int[2];
 
@@ -176,14 +186,15 @@ public class SnakeGame {
     // Iterate recursive Checks and increase the length by 1.
     recursiveChecks++;
     tailPosition[2]++;
+
+    // Initialize values to refer to the current and previous indexes.
     int rowCurrent = currentPosition[0];
     int colCurrent = currentPosition[1];
-
     int rowPrevious = previousPosition[0];
     int colPrevious = previousPosition[1];
 
     // Base case for recursive method.
-    // Check whether the position has one neighbor and is not the head.
+    // Check whether the position has one neighbor and the current position is not the head.
     if (rowCurrent != headPosition[0] || colCurrent != headPosition[1]) {
       if (rowCurrent == 0 && colCurrent == 0) {
         if (game[rowCurrent][colCurrent + 1] && !game[rowCurrent + 1][colCurrent]) {
@@ -510,7 +521,6 @@ public class SnakeGame {
         return findTailRecursive(currentPosition, previousPosition);
       }
     }
-
     // Call is never executed.
     return tailPosition;
   }

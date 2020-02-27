@@ -91,7 +91,6 @@ public class SnakeGameTester {
         {false, false, false, false, false, false, false, false}};
 
     SnakeGame testFour = new SnakeGame(inputArray, 2, 7);
-
     assertEquals(17, testFour.findTailExhaustive()[2]);
   }
 
@@ -124,7 +123,6 @@ public class SnakeGameTester {
         {true}};
 
     int[] expectedArray = {0, 0, 1};
-
     SnakeGame testSix = new SnakeGame(inputArray, 0, 0);
 
     for (int i = 0; i < expectedArray.length; i++) {
@@ -148,11 +146,7 @@ public class SnakeGameTester {
         {false, false}};
 
     int[] expectedArray = {2, 0, 3};
-    int[] a = {0, 0};
-
     SnakeGame testOne = new SnakeGame(inputArray, 0, 0);
-
-    testOne.findTailRecursive();
 
     for (int i = 0; i < testOne.findTailExhaustive().length; i++) {
       assertEquals(expectedArray[i], testOne.findTailRecursive()[i]);
@@ -174,7 +168,6 @@ public class SnakeGameTester {
         {true, false, false, false, false, false}};
 
     SnakeGame testTwo = new SnakeGame(inputArray, 1, 5);
-
     assertEquals(0, testTwo.findTailRecursive()[0]);
 
   }
@@ -203,60 +196,56 @@ public class SnakeGameTester {
         {false, true, false}};
 
     SnakeGame testThree = new SnakeGame(inputArray, 1, 0);
-
     assertEquals(1, testThree.findTailRecursive()[1]);
   }
 
-  // ***************************
   // This test is to make sure that the recursive method is returning the correct length of the snake.
   // This test is important because it is important to know that the length is iterating correctly for each cell that is examined.
-  // This test was not working at first, but it was fixed by deleting an extra call in the public recursive method.
-  @Test
-  public void testFindTailRecursive5() {
-    boolean[][] inputArray = {
-        {false, true, false, false},
-        {false, true, false, false},
-        {false, true, true, false},
-        {false, false, true, false}};
-
-    SnakeGame testFive = new SnakeGame(inputArray, 0, 1);
-
-    assertEquals(5, testFive.findTailRecursive()[2]);
-  }
-
-  // This test is to make sure that the recursive checks are iterating as expected.
-  // This test is important because the checks should be iterating for every cell checked and not for additional or less times.
-  // This test failed at first due to an over-count, which was fixed by removing an extra call to the method.
-  // This test ended up being successful after this extra called was removed.
-
+  // This test has the tail located on the bottom right corner, which makes sure that the statements pertaining for that specific index are executed.
+  // This was not working at first due to a typo in assigning the new column value since it was set to subtract, rather than adding.
+  // This problem was fixed by making the edit from minus to plus.
+  // This test was also not working at first, but it was fixed by deleting an extra call in the public recursive method.
   @Test
   public void testFindTailRecursive4() {
     boolean[][] inputArray = {
         {false, true, false, false},
         {false, true, false, false},
         {false, true, true, false},
-        {false, false, true, false}};
+        {false, false, true, true}};
 
     SnakeGame testFour = new SnakeGame(inputArray, 0, 1);
+    assertEquals(6, testFour.findTailRecursive()[2]);
+  }
 
-    testFour.findTailRecursive();
+  // This test is to make sure that the recursive checks are iterating as expected.
+  // This test is important because the checks should be iterating for every cell checked and not for additional or less times.
+  // This test is a very similar array to the previous test in order to make sure that both components work when given a single array.
+  // This test also showed that the recursive checks are equal to the length of the array.
+  // This test failed at first due to an over-count, which was fixed by removing an extra call to the method.
+  // This test ended up being successful after this extra called was removed.
+  @Test
+  public void testFindTailRecursive5() {
+    boolean[][] inputArray = {
+        {false, true, false, false},
+        {false, true, false, false},
+        {false, true, true, false},
+        {false, false, true, true}};
 
-    assertEquals(5, SnakeGame.getRecursiveChecksPublic());
+    SnakeGame testFive = new SnakeGame(inputArray, 0, 1);
+    testFive.findTailRecursive();
+    assertEquals(6, SnakeGame.getRecursiveChecksPublic());
   }
 
   // This test is to make sure that the smallest possible array is being taken into account.
   // This test is important because it is good for the program to take into consideration all possible arrays.
   // This test was at first unsuccessful due to an out-of-bounds exception, which was fixed by creating a separate if-conditional.
   // This conditional was placed in the public recursive method in order to avoid that step being executed in each recursive call.
-
   @Test
   public void testFindTailRecursive6() {
     boolean[][] inputArray = {
         {true}};
 
     int[] expectedArray = {0, 0, 1};
-    int[] a = {0, 0};
-
     SnakeGame testSix = new SnakeGame(inputArray, 1, 0);
 
     for (int i = 0; i < testSix.findTailExhaustive().length; i++) {
